@@ -1,7 +1,9 @@
 import React from 'react'
 import TodoItem from './TodoItem'
 import { connect } from 'react-redux'
-import { TYPE_TODO_DEL, TYPE_TODO_TOGGLE } from '../store/types/todo'
+
+import { deleteTaskAction, toggleTaskAction } from '../store/actions/todo'
+import { todosSelector } from '../store/selectors/todo'
 const TodoList = ({todos=[],onDelTask,onToggleTask}) => {
     return (
        <ul>
@@ -14,18 +16,14 @@ const TodoList = ({todos=[],onDelTask,onToggleTask}) => {
     )
 }
 const TodoListStore =connect((state)=>({
-    todos:state
+  todos: todosSelector(state)
 }),
-(dispatch)=>({
-    onDelTask: taskId=> dispatch({
-        type:TYPE_TODO_DEL,
-        payload:{taskId}
-    }),
-    onToggleTask: taskId=> dispatch({
-        type:TYPE_TODO_TOGGLE,
-        payload:{taskId}
-    })
-})
+(dispatch) => ({
+    onDelTask: taskId =>
+        dispatch(deleteTaskAction(taskId)),
+    onToggleTask: taskId =>
+        dispatch(toggleTaskAction(taskId)),
+}),
 
 )
 export default TodoListStore(TodoList)

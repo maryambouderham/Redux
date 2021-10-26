@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { TYPE_TODO_FILTER } from '../store/types/todo'
+import {  updateFilterAction } from '../store/actions/todo'
 
-const TodoFilter = ({filterTaskByTitle}) => {
+
+const TodoFilter = ({updateFilter}) => {
     const handleChange=(e)=>{
-        filterTaskByTitle(e.target.value)
+        updateFilter(e.target.value)
     }
     return (
         <div className="w-50 mx-auto text-center ">
@@ -16,10 +17,7 @@ const TodoFilter = ({filterTaskByTitle}) => {
     )
 }
 const TodoFilterStore =connect(null,
-    (dispatch)=>({
-        filterTaskByTitle:query=>dispatch({
-            type:TYPE_TODO_FILTER,
-            payload:{query}
-        }) 
-    }))
+                            (dispatch)=>({
+                               updateFilter:value=>dispatch(updateFilterAction(value))
+                            }))
 export default TodoFilterStore(TodoFilter)
