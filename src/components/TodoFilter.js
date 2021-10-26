@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import {  updateFilterAction } from '../store/actions/todo'
 
 
@@ -16,8 +16,23 @@ const TodoFilter = ({updateFilter}) => {
         </div>
     )
 }
-const TodoFilterStore =connect(null,
-                            (dispatch)=>({
-                               updateFilter:value=>dispatch(updateFilterAction(value))
-                            }))
-export default TodoFilterStore(TodoFilter)
+// const TodoFilterStore =connect(null,
+//                             (dispatch)=>({
+//                                updateFilter:value=>dispatch(updateFilterAction(value))
+//                             }))
+
+                            const TodoFilterStore=()=>{
+                               
+                                const dispatch=useDispatch()
+                                const updateFilter=value=>dispatch(updateFilterAction(value))
+                               
+                                return <TodoFilter 
+                                
+                                updateFilter={updateFilter}
+                                />
+                            }
+
+
+
+
+export default TodoFilterStore
