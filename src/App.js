@@ -1,25 +1,23 @@
-import { useState } from "react";
-import { Provider } from "react-redux";
-import TodoAdd from "./components/TodoAdd";
-import TodoFilter from "./components/TodoFilter";
-import TodoList from "./components/TodoList";
-
-import store from "./store";
-
+import { useEffect, useState } from "react";
 
 
 const App=()=> {
-  
+  const [data,setData]=useState([])
+  const [error, setError] = useState(null);// where to store the coming errors
+ 
+   const fetchData=()=> {// the function to fetch data from the api
+     fetch("https://hn.algolia.com/api/v1/search?query=redux")
+       .then(res => res.json())
+       .then(res => setData(res))
+       .catch(err => setError(err));
+   }
+   useEffect(() => {
+   fetchData();
+ }, []);
   return (
-    <Provider store={store}>
-    <div className="container">
-            <TodoAdd/>
-            <hr/>
-            <TodoFilter/>
-            <TodoList 
-            />
+    <div>
+      hello js
     </div>
-    </Provider>
   );
 }
 
